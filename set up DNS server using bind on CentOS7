@@ -1,0 +1,68 @@
+HOW TO: Set up DNS server using bind on CentOS7
+
+DNS101: 
+DNS stands for Domain Naming System. DNS resolves the hostname associated with an IP address. Machines and people don't speak the same language and DNS makes our lives easier because we don't have to remember each site's associated IP address. Computers don't understand the URL "https://www.duckduckgo.com" but instead need a translater - which DNS acts as - before knowing where DuckDuckGo's server(s) are. Based on a reverse dns lookup using nslookup, I see that 54.241.2.241 and 50.18.200.106 are DuckDuckGo's servers.
+
+Server:		172.27.35.1
+Address:	172.27.35.1#53
+
+Non-authoritative answer:
+Name:	duckduckgo.com
+Address: 54.241.2.241
+Name:	duckduckgo.com
+Address: 50.18.200.106
+
+
+
+files to edit:
+/etc/named.conf
+/etc/resolv.conf
+
+files to create:
+/var/named/forward.beer
+/var/named/reverse.beer
+
+check if your DNS works:
+
+[root@stout ~]# dig stout.beer.local
+
+; <<>> DiG 9.9.4-RedHat-9.9.4-51.el7_4.2 <<>> stout.beer.local
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 32778
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;stout.beer.local.		IN	A
+
+;; ANSWER SECTION:
+stout.beer.local.	86400	IN	A	192.168.200.130
+
+;; AUTHORITY SECTION:
+beer.local.		86400	IN	NS	stout.beer.local.
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; WHEN: Mon Apr 23 09:46:43 PDT 2018
+;; MSG SIZE  rcvd: 75
+
+
+
+
+[root@stout ~]# nslookup beer.local
+Server:		127.0.0.1
+Address:	127.0.0.1#53
+
+Name:	beer.local
+Address: 192.168.200.131
+Name:	beer.local
+Address: 192.168.200.130
+
+[root@stout ~]# nslookup ipa
+Server:		127.0.0.1
+Address:	127.0.0.1#53
+
+Name:	ipa.beer.local
+Address: 192.168.200.131
