@@ -1,0 +1,42 @@
+Set up Samba file server on Ubuntu (18.04.4 LTS) to share files with Windows and macOS users.
+
+Our system account user will be 'sour'
+
+Install Samba on Ubuntu:
+sudo apt update
+sudo apt install samba 
+
+Create a directory to share:
+mkdir /home/sour/sambashare/
+
+Append the following lines to Samba's config file located at /etc/samba/smb.conf
+[sambashare]
+	comment = Samba on Ubuntu
+	path = /home/sour/sambashare
+	read only = no
+	browseable = yes
+
+What it means:
+comment - description of directory you're sharing
+path - shared directory
+read only - if no, permission to write; if yes, only read permission.
+browseable - Will be listed under "Network" on users' file managers
+
+Since we edited a config file, we need to restart the service:
+sudo systemctl restart smbd
+	or
+sudo service smbd restart
+
+Update the firewall rules to allow Samba traffic:
+sudo ufw allow samba
+
+Set up Samba password for our user account, sour.
+sudo smbpasswd -a sour
+
+Test it out by connecting to sambashare:
+smb://ipaddress/sambashare
+* ipaddress is the ip address of your Ubuntu machine.
+
+After you successfully enter your Samba password, you'll be connected to your Ubuntu shared directory!
+
+
