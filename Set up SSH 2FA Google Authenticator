@@ -1,0 +1,32 @@
+SSH to Ubuntu host using Google Authenticator
+remote host: Ubuntu 18.04.4 LTS
+Requirements: Google Authenticator app on iOS or Android
+
+First, set up SSH on Ubuntu (see instructions)
+
+On Ubuntu, install Google Authenticator.
+sudo apt-get install libpam-google-authenticator
+
+ssh into Ubuntu from the machine you'll be using (in this case I used my Mac). 
+
+Run the following command to create a secret key:
+google-authenticator
+
+You'll be prompted to update your Google Authenticator file, type 'y'. 
+A few more yes/no questions are prompted concerning security/convenience. 
+
+Next, Google Authenticator will give you a QR code, a secret key, and emergency scratch codes.
+Use either the QR code or secret key on your Google Authenticator app on your phone. 
+Write down the emergency scratch codes, in the case you lose or no longer have access to your phone.
+
+Back on your terminal, open /etc/pam.d/sshd (sudo vi /etc/pam.d/sshd) 
+Add "auth required pam_google_authenticator" to the bottom of the file.
+
+Open /etc/ssh/sshd_config and add/update the ChallengeResponseAuthentication line:
+ChallengeResponseAuthentication yes
+
+Since you changed config files, restart the sshd service:
+sudo systemctl restart ssh
+
+Viola!
+Next time you try to ssh into your Ubuntu machine through this machine, you'll be prompted your password AND your Google Authenticator code.
