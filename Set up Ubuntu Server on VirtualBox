@@ -32,10 +32,36 @@ Reboot.
 Enter credentials for user you created earlier.
 
 Set up a Basic Firewall and enable OpenSSH
-'''sudo ufw app list
+$ sudo ufw app list
 # output:
 Available applications:
-	OpenSSH'''
+	OpenSSH
+	
+Allow connections via SSH
+$ sudo ufw allow OpenSSH
+# output:
+Rules Updated
+Rules Updated (v6)
+
+Enable firewall
+$ sudo ufw enable
+# output:
+Firewall is active and enabled on system startup
+
+Check which connections are allowed through your firewall
+$ sudo ufw status
+# output:
+Status: active
+
+To				Action		From
+--				------		----
+OpenSSH			ALLOW		Anywhere
+OpenSSH (v6)	ALLOW		Anywhere (v6)
+
+Set up SSH keys for authentication (See instructions)
+
+Note: It's considered best practice to not allow root login via password authentication.
+
 	
 	
 

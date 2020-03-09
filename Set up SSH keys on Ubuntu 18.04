@@ -1,0 +1,39 @@
+Set up SSH keys on Ubuntu 18.04
+
+Basics: SSH is an encrypted protocol used to communicate with servers.
+Best practices for administering a server is to disable root logins and instead use RSA key pairs.
+
+1) Create key pair on client machine
+$ ssh-keygen
+# output:
+Generating public/private rsa key pair.
+Enter file in which to save the key (/yourhome/.ssh/id_rsa):
+
+Press enter to accept default file location.
+
+You may choose to enter a passphrase or leave it blank at this time.
+
+# output:
+Your identification has been saved in /yourhome/.ssh/id_rsa.
+Your public key has been saved in /yourhome/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:blahsdlfaisfanblahsr6u username@remote_host
+The key's randomart image is:
++--[ RSA 2048]----+
+| ..         =    |
+|  s .    ...+    |
+|    s. -=    o   |
+| .      ..   o   |
+|      ..S   ..   |
+|     o o.   ..   |
+|   o.soo         |
+|. . s .          |
+|          = =    |
++-----------------+
+
+Now you have a public and private key! 
+
+
+
+Give your server your client's public key.
+$ ssh-copy-id username@remote_host
