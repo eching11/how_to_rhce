@@ -1,0 +1,42 @@
+Run Ubuntu using VirtualBox
+
+Requirements: 
+VirtualBox 
+Ubuntu ISO file (Server)
+
+Open VirtualBox and select "New"
+Name: Ubuntu Server Munki
+Type: Linux
+Version: Ubuntu (64-bit)
+
+Choose how much RAM, I'm choosing 1024 MB.
+
+Create a virtual hard drive now. 
+Choose VDI.
+Choose Dynamically allocated, in case your virtual hard disk file grows.
+Decide how much disk space will be set aside for your VM. (I set aside 15 GB)
+
+Start your new VM.
+Devices > Optical Drives > Choose a disk file...
+Choose ubuntu iso disk
+Go through server configuration, I went with default options.
+
+Set up profile by creating username and password.
+
+Install OpenSSH if you'll be SSHing into server. 
+There are other popular installations for servers.
+
+Take a walk or grab some coffee while server finishes installation.
+Reboot.
+
+Enter credentials for user you created earlier.
+
+Set up a Basic Firewall and enable OpenSSH
+'''sudo ufw app list
+# output:
+Available applications:
+	OpenSSH'''
+	
+	
+
+
