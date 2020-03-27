@@ -1,2 +1,5 @@
-# how_to_rhce
-step by step guide for (some) rhce objectives
+# How to Sys Admin
+Collection of common things sys admins use and step by step walkthroughs.
+
+## Resources and Examples
+Linux Administration Cookbook
